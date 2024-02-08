@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php 
+if(isset($_GET['lang'])){$lang = $_GET['lang']; $GLOBALS['lang'] = $lang;}
+if(!empty($_GET['lang'])){
+if($lang == "eng"){include_once __DIR__ . '\..\languages\english.php';}
+else if($lang == "tur"){include_once __DIR__ . '\..\languages\turkish.php';}
+else if($lang == "arb"){include_once __DIR__ . '\..\languages\arabic.php';}
+else{include_once __DIR__ . '\..\languages\turkish.php';}}
+else{include_once __DIR__ . '\..\languages\turkish.php';} 
+?>
 <html lang="tr">
 
 <head>

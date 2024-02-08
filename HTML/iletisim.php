@@ -1,22 +1,41 @@
 <?php
 include_once "../PHP/top.php";
-require_once "../PHP/classes.php";
-$csv = new Csv;
-$csvFileContent = array();
-$csvFileContent[] = "İsim; Soyad; Email; Mesaj; \n";
-if(isset($_POST['İsim'])){
-$csvFileContent[] = $_POST['İsim'].";".$_POST['Soyad'].";".$_POST['Email'].";".$_POST['Mesaj'].";"."\n";
-$csv->saveFile($csvFileContent);}
+$mesajbasarili = 0;
+if (isset($_POST['isim'])) {
+    // $csvFileContent[] = $_POST['isim'].";".$_POST['soyad'].";".$_POST['Email'].";".$_POST['Mesaj'].";"."\n";
+
+    $fileref = "csvFileContent"; //Dynamically generated
+    $filename = "$fileref.csv";
+    $list = array(
+        // array("İsim; Soyad; Email; Mesaj;"),
+        array($_POST['isim'] . "; " . $_POST['soyad'] . "; " . $_POST['email'] . "; " . $_POST['Mesaj'] . ";")
+    );
+
+    $fp = fopen('csvFileContent.csv', 'a');
+
+    foreach ($list as $fields) {
+        fputcsv($fp, $fields, ";");
+    }
+
+    fclose($fp);
+    $mesajbasarili = 1;
+}
+unset($_POST['isim']);
 ?>
 
 <header class="main-header" id="navbar">
     <?php include "../PHP/navBar.php"; ?>
-    <!-- /.container -->
-    
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("submit").submit();
+        }
+    </script>
+
 </header>
 </div>
 <script src="https://smtpjs.com/v3/smtp.js"></script>
- 
+
 <div class="container" id="container">
     <div class="square square-1"></div>
     <div class="square square-2"></div>
@@ -35,44 +54,15 @@ $csv->saveFile($csvFileContent);}
                         <hr class="spaceForLogo" style="height: 10px; opacity: 0;">
                         <hr class="spaceForLogo" style="height: 10px; opacity: 0;">
                         <!-- <h3 class="fs-2 fw-bold">Hakkımızda</h3> -->
-                        <h2 class="featurette-heading fw-normal">İletişim</h2>
+                        <?php if ($mesajbasarili == 1) {
+                            echo '<div class="alert alert-success" role="alert">'; echo $contactUSAlert; echo'</div>';
+                        } ?>
+                        <h2 class="featurette-heading fw-normal"> <?php echo $contactUSH2; ?></h2>
                         <hr class="spaceForLogo" style="height: 10px; opacity: 0;">
-                        <p>Telefon: <a href="tel:4445849"
-                                style="text-decoration: none; color: black; font-weight: bolder;">444 5 849</a> / <a
-                                href="tel:08508850209"
-                                style="text-decoration: none; color: black; font-weight: bolder;">0850 885 0209</a> </p>
-
-                        <p>Adres:</p>
-                        <p style="font-size: medium;"> Piri Paşa Mah. Şaban DeresiSk. No:3/A Hasköy Beyoğlu / İstanbul
-                        </p>
-                        <p>Mail:</p>
-                        <p style="font-size: medium;"> <a href="mailto:info@sienaturizm.com">info@sienaturizm.com</a>
-                        </p>
-                        <p>İletişim Formu:</p>
+                        <?php echo $contactUsP; ?>
+                        <br>
                         <form action="" method="POST">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col"> <label for="formGroupExampleInput">İsim</label>
-                                        <input type="text" name="İsim" id="name"class="form-control" placeholder="İsim">
-                                    </div>
-                                    <div class="col"> <label for="formGroupExampleInput">Soyad</label>
-                                        <input type="text" name="Soyad" id="surname" class="form-control" placeholder="Soyad">
-                                    </div>
-                                </div><br>
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="formGroupExampleInput">E-mail</label>
-                                        <input type="text" name="Email"  id="email" class="form-control" id="formGroupExampleInput"
-                                            placeholder="mail">
-                                        <br>
-                                        <label for="exampleFormControlTextarea2">Mesajınız</label>
-                                        <textarea class="form-control" name="Mesaj" id="exampleFormControlTextarea2"
-                                            rows="5"></textarea><br> <button type="submit"
-                                            class="btn btn-outline btn-lg"
-                                            style="background-color: #19386b; color: white;"><b>Gönder</b></button>
-                                    </div>
-                                </div>
-                            </div>
+                        <?php echo $contactUsForm; ?>
 
                         </form>
                     </div>

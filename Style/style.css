@@ -148,7 +148,7 @@ body {
 .imgX {
   width: 95%;
   height: 95%;
-  background-image: url("https://www.sienaturizm.com.tr/Gerecler/Sablonlar/NTG2018/img/hero-slide-3.jpg");
+  background-image: url("https://www.sienaturizm.com.tr/images/mainBackground.webp");
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 2px;
@@ -399,6 +399,10 @@ body {
 }
 
 @media (max-width: 320px) {
+  body{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
   .centeredText {
     font-size: 40px;
   }
